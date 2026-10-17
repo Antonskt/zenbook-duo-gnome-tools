@@ -30,4 +30,4 @@ gjs -m tests/zones.test.js
 
 ## D-Bus
 
-The Zenbook Duo Linux services call these methods on `org.gnome.Shell`, object `/org/gnome/Shell/Extensions/ZenbookDuoSnap`, interface `org.gnome.Shell.Extensions.ZenbookDuoSnap`: `ShowOsd`, `ShowMicVolume`, `ShowAlert`, `AppKeyPressed`, `ShiftF7Pressed` and `SetTopBrightness`. Their names and arguments stay stable. Without the extension, the services fall back to notifications.
+The Zenbook Duo Linux services call these methods on `org.gnome.Shell`, object `/org/gnome/Shell/Extensions/ZenbookDuoSnap`, interface `org.gnome.Shell.Extensions.ZenbookDuoSnap`: `ShowOsd`, `ShowMicVolume`, `ShowAlert`, `AppKeyPressed`, `ShiftF7Pressed` and `SetTopBrightness`. Their names and arguments stay stable. Without the extension, the services show notifications instead, or no pop-up for the mic volume.
