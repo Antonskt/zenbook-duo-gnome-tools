@@ -13,14 +13,15 @@ The window snapping and display controls work on their own. The keys and pop-ups
 
 ## Install
 
-From [extensions.gnome.org](https://extensions.gnome.org), or from this repository:
+Download `zenbook-duo-snap@zenbook-duo-linux.shell-extension.zip` from the [latest release](https://github.com/Antonskt/zenbook-duo-snap/releases/latest), then:
 
 ```bash
-./pack.sh
 gnome-extensions install --force zenbook-duo-snap@zenbook-duo-linux.shell-extension.zip
 ```
 
-Log out and back in, then turn it on in the Extensions app (or `gnome-extensions enable zenbook-duo-snap@zenbook-duo-linux`).
+Log out and back in, then turn it on in the Extensions app (or `gnome-extensions enable zenbook-duo-snap@zenbook-duo-linux`). Updates work the same way.
+
+To build the zip yourself: `./pack.sh`.
 
 ## Tests
 
