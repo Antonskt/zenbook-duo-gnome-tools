@@ -1,4 +1,4 @@
-// Zenbook Duo Snap: while a window is dragged, a popup shows the top screen,
+// Zenbook Duo GNOME Tools: while a window is dragged, a popup shows the top screen,
 // the bottom screen, "both screens" and any external screens as small layout
 // icons. Dropping on a
 // cell of an icon places (tiles) the window there; "Free" puts it on that
@@ -29,7 +29,7 @@ import {AlertBubble} from './alertBubble.js';
 // volume and brightness ones: mic volume (mic key + Up/Down), Fn lock,
 // keyboard backlight, the screen key, and app keys without a shortcut.
 const DBUS_INTERFACE = `<node>
-  <interface name="org.gnome.Shell.Extensions.ZenbookDuoSnap">
+  <interface name="org.gnome.Shell.Extensions.ZenbookDuoGnomeTools">
     <method name="ShowMicVolume">
       <arg type="d" direction="in" name="level"/>
       <arg type="b" direction="in" name="muted"/>
@@ -90,7 +90,7 @@ function acceleratorAssigned(accelerator, ownSettings) {
     }
     return ownSettings.list_keys().some(key => has(ownSettings.get_value(key).recursiveUnpack()));
 }
-const DBUS_PATH = '/org/gnome/Shell/Extensions/ZenbookDuoSnap';
+const DBUS_PATH = '/org/gnome/Shell/Extensions/ZenbookDuoGnomeTools';
 
 // The Zenbook Duo daemon's state; "status.keyboardAttached" tells whether the
 // keyboard sits on the bottom screen.
@@ -205,9 +205,9 @@ class SnapPopup {
         this._targets = [];
         this._hovered = null;
 
-        this.actor = new St.BoxLayout({style_class: 'duo-snap-popup', reactive: false});
+        this.actor = new St.BoxLayout({style_class: 'duo-tools-popup', reactive: false});
         const column = new St.BoxLayout({
-            style_class: 'duo-snap-column',
+            style_class: 'duo-tools-column',
             orientation: Clutter.Orientation.VERTICAL,
         });
         column.add_child(this._screenBox('top', 'Top screen', screens.top >= 0));
@@ -217,7 +217,7 @@ class SnapPopup {
         // External screens to the right, two per column like the panels.
         for (let i = 0; i < externals.length; i += 2) {
             const externalColumn = new St.BoxLayout({
-                style_class: 'duo-snap-column',
+                style_class: 'duo-tools-column',
                 orientation: Clutter.Orientation.VERTICAL,
             });
             for (let n = i; n < Math.min(i + 2, externals.length); n++)
@@ -229,14 +229,14 @@ class SnapPopup {
     _screenBox(screen, label, enabled) {
         const box = this._box(label, enabled);
         const grid = new St.BoxLayout({
-            style_class: 'duo-snap-layouts',
+            style_class: 'duo-tools-layouts',
             orientation: Clutter.Orientation.VERTICAL,
         });
         // Three layout icons per row.
         for (let i = 0; i < SCREEN_LAYOUTS.length; i += 3) {
-            const line = new St.BoxLayout({style_class: 'duo-snap-layouts-row'});
+            const line = new St.BoxLayout({style_class: 'duo-tools-layouts-row'});
             for (const layout of SCREEN_LAYOUTS.slice(i, i + 3)) {
-                line.add_child(this._layoutIcon(layout, 'duo-snap-layout', box, enabled,
+                line.add_child(this._layoutIcon(layout, 'duo-tools-layout', box, enabled,
                     zone => zone === 'free'
                         ? {kind: 'free', screen}
                         : {kind: 'zone', screen, zone}));
@@ -249,15 +249,15 @@ class SnapPopup {
 
     _spanBox(enabled) {
         const box = this._box('Both', enabled);
-        box.add_style_class_name('duo-snap-span');
+        box.add_style_class_name('duo-tools-span');
         const icons = new St.BoxLayout({
-            style_class: 'duo-snap-layouts',
+            style_class: 'duo-tools-layouts',
             orientation: Clutter.Orientation.VERTICAL,
             y_expand: true,
         });
         // The icons fill the box's height, matching the two screen boxes.
         for (const layout of SPAN_LAYOUTS) {
-            const icon = this._layoutIcon(layout, 'duo-snap-layout duo-snap-span-layout',
+            const icon = this._layoutIcon(layout, 'duo-tools-layout duo-tools-span-layout',
                 box, enabled, zone => ({kind: 'span', zone}));
             icon.y_expand = true;
             icons.add_child(icon);
@@ -268,10 +268,10 @@ class SnapPopup {
 
     _box(label, enabled) {
         const box = new St.BoxLayout({
-            style_class: 'duo-snap-box',
+            style_class: 'duo-tools-box',
             orientation: Clutter.Orientation.VERTICAL,
         });
-        box.add_child(new St.Label({text: label, style_class: 'duo-snap-label'}));
+        box.add_child(new St.Label({text: label, style_class: 'duo-tools-label'}));
         if (!enabled)
             box.opacity = 90; // greyed out: that screen is off
         return box;
@@ -284,15 +284,15 @@ class SnapPopup {
             orientation: Clutter.Orientation.VERTICAL,
         });
         for (const row of layout.rows) {
-            const line = new St.BoxLayout({style_class: 'duo-snap-cells', y_expand: true});
+            const line = new St.BoxLayout({style_class: 'duo-tools-cells', y_expand: true});
             for (const zone of row) {
                 const cell = new St.Bin({
-                    style_class: 'duo-snap-zone',
+                    style_class: 'duo-tools-zone',
                     x_expand: true,
                     y_expand: true,
                 });
                 if (zone === 'free')
-                    cell.set_child(new St.Label({text: 'Free', style_class: 'duo-snap-free-label'}));
+                    cell.set_child(new St.Label({text: 'Free', style_class: 'duo-tools-free-label'}));
                 line.add_child(cell);
                 this._targets.push({target: targetFor(zone), actor: cell, enabled, box});
             }
@@ -325,7 +325,7 @@ class SnapPopup {
     }
 }
 
-export default class ZenbookDuoSnapExtension extends Extension {
+export default class ZenbookDuoGnomeToolsExtension extends Extension {
     enable() {
         this._settings = this.getSettings();
         this._drag = null;
@@ -1013,7 +1013,7 @@ export default class ZenbookDuoSnapExtension extends Extension {
                 s.primary = false;
             // A mirror shares its source's place: that one carries the flag.
             (screens.find(s => s.connector === target.mirrorOf) ?? target).primary = true;
-        }).catch(error => log(`Zenbook Duo Snap: changing the main display failed: ${error.message}`));
+        }).catch(error => log(`Zenbook Duo GNOME Tools: changing the main display failed: ${error.message}`));
     }
 
     _turnOffBottom() {
@@ -1021,7 +1021,7 @@ export default class ZenbookDuoSnapExtension extends Extension {
             const bottom = screens.find(s => s.panel === 'bottom');
             if (bottom)
                 bottom.on = false;
-        }).catch(error => log(`Zenbook Duo Snap: turning the bottom screen off failed: ${error.message}`));
+        }).catch(error => log(`Zenbook Duo GNOME Tools: turning the bottom screen off failed: ${error.message}`));
     }
 
     /** D-Bus method: an ASUS app key was pressed; says so when nothing uses it. */

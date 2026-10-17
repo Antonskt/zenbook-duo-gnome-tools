@@ -48,30 +48,30 @@ export class AlertBubble {
     _bubble(index) {
         const {icon, title, message, buttons} = this._content;
         const bubble = new St.BoxLayout({
-            style_class: 'osd-window duo-snap-alert',
+            style_class: 'osd-window duo-tools-alert',
             orientation: Clutter.Orientation.HORIZONTAL,
             reactive: true,
         });
         bubble.add_child(new St.Icon({
             icon_name: icon,
-            style_class: 'duo-snap-alert-icon',
+            style_class: 'duo-tools-alert-icon',
             y_align: Clutter.ActorAlign.CENTER,
         }));
         const text = new St.BoxLayout({
-            style_class: 'duo-snap-alert-text',
+            style_class: 'duo-tools-alert-text',
             orientation: Clutter.Orientation.VERTICAL,
             x_expand: true,
             y_align: Clutter.ActorAlign.CENTER,
         });
-        text.add_child(new St.Label({text: title, style_class: 'duo-snap-alert-title'}));
-        const body = new St.Label({text: message, style_class: 'duo-snap-alert-message'});
+        text.add_child(new St.Label({text: title, style_class: 'duo-tools-alert-title'}));
+        const body = new St.Label({text: message, style_class: 'duo-tools-alert-message'});
         body.clutter_text.line_wrap = true;
         body.clutter_text.ellipsize = Pango.EllipsizeMode.NONE;
         text.add_child(body);
         bubble.add_child(text);
 
         const actions = new St.BoxLayout({
-            style_class: 'duo-snap-alert-actions',
+            style_class: 'duo-tools-alert-actions',
             orientation: buttons.length > 1 ? Clutter.Orientation.VERTICAL : Clutter.Orientation.HORIZONTAL,
             y_align: Clutter.ActorAlign.CENTER,
         });
@@ -79,7 +79,7 @@ export class AlertBubble {
             const enabled = typeof sensitive === 'function' ? sensitive(index) : true;
             const button = new St.Button({
                 label: typeof label === 'function' ? label(index) : label,
-                style_class: 'duo-snap-alert-button',
+                style_class: 'duo-tools-alert-button',
                 can_focus: enabled,
                 reactive: enabled,
             });

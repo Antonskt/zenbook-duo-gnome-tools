@@ -1,4 +1,4 @@
-# Zenbook Duo Snap
+# Zenbook Duo GNOME Tools
 
 A GNOME Shell extension for the ASUS Zenbook Duo (GNOME 50).
 
@@ -13,13 +13,13 @@ The window snapping and display controls work on their own. The keys and pop-ups
 
 ## Install
 
-Download `zenbook-duo-snap@zenbook-duo-linux.shell-extension.zip` from the [latest release](https://github.com/Antonskt/zenbook-duo-snap/releases/latest), then:
+Download `zenbook-duo-gnome-tools@zenbook-duo-linux.shell-extension.zip` from the [latest release](https://github.com/Antonskt/zenbook-duo-gnome-tools/releases/latest), then:
 
 ```bash
-gnome-extensions install --force zenbook-duo-snap@zenbook-duo-linux.shell-extension.zip
+gnome-extensions install --force zenbook-duo-gnome-tools@zenbook-duo-linux.shell-extension.zip
 ```
 
-Log out and back in, then turn it on in the Extensions app (or `gnome-extensions enable zenbook-duo-snap@zenbook-duo-linux`). Updates work the same way.
+Log out and back in, then turn it on in the Extensions app (or `gnome-extensions enable zenbook-duo-gnome-tools@zenbook-duo-linux`). Updates work the same way.
 
 To build the zip yourself: `./pack.sh`.
 
@@ -31,4 +31,4 @@ gjs -m tests/zones.test.js
 
 ## D-Bus
 
-The Zenbook Duo Linux services call these methods on `org.gnome.Shell`, object `/org/gnome/Shell/Extensions/ZenbookDuoSnap`, interface `org.gnome.Shell.Extensions.ZenbookDuoSnap`: `ShowOsd`, `ShowMicVolume`, `ShowAlert`, `AppKeyPressed`, `ShiftF7Pressed` and `SetTopBrightness`. Their names and arguments stay stable. Without the extension, the services show notifications instead, or no pop-up for the mic volume.
+The Zenbook Duo Linux services call these methods on `org.gnome.Shell`, object `/org/gnome/Shell/Extensions/ZenbookDuoGnomeTools`, interface `org.gnome.Shell.Extensions.ZenbookDuoGnomeTools`: `ShowOsd`, `ShowMicVolume`, `ShowAlert`, `AppKeyPressed`, `ShiftF7Pressed` and `SetTopBrightness`. Their names and arguments stay stable. Without the extension, the services show notifications instead, or no pop-up for the mic volume.

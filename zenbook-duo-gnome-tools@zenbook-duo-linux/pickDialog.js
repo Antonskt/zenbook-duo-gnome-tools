@@ -28,7 +28,7 @@ class ScreenPickDialog extends ModalDialog.ModalDialog {
      *   (swap: in pick order; move: source, then target)
      */
     _init({monitors, named, source, picked, onDone}) {
-        super._init({styleClass: 'duo-snap-pick-dialog'});
+        super._init({styleClass: 'duo-tools-pick-dialog'});
         this._source = source;
         this._picked = source >= 0 ? [] : [...picked];
         this._onDone = onDone;
@@ -42,7 +42,7 @@ class ScreenPickDialog extends ModalDialog.ModalDialog {
         }));
 
         const map = new St.Widget({
-            style_class: 'duo-snap-pick-map',
+            style_class: 'duo-tools-pick-map',
             width: MAP_WIDTH,
             height: MAP_HEIGHT,
             x_align: Clutter.ActorAlign.CENTER,
@@ -51,7 +51,7 @@ class ScreenPickDialog extends ModalDialog.ModalDialog {
         this._tiles = named.map((screen, i) => {
             const isSource = screen.index === source;
             const tile = new St.Button({
-                style_class: 'duo-snap-pick-screen',
+                style_class: 'duo-tools-pick-screen',
                 can_focus: !isSource,
                 reactive: !isSource,
                 x: rects[i].x,
@@ -60,20 +60,20 @@ class ScreenPickDialog extends ModalDialog.ModalDialog {
                 height: rects[i].height,
             });
             if (isSource)
-                tile.add_style_class_name('duo-snap-pick-source');
+                tile.add_style_class_name('duo-tools-pick-source');
             const box = new St.BoxLayout({
                 orientation: Clutter.Orientation.VERTICAL,
                 x_align: Clutter.ActorAlign.CENTER,
                 y_align: Clutter.ActorAlign.CENTER,
             });
             const badge = new St.Label({
-                style_class: 'duo-snap-pick-badge',
+                style_class: 'duo-tools-pick-badge',
                 x_align: Clutter.ActorAlign.CENTER,
             });
             box.add_child(badge);
             box.add_child(new St.Label({
                 text: screen.name,
-                style_class: 'duo-snap-pick-name',
+                style_class: 'duo-tools-pick-name',
                 x_align: Clutter.ActorAlign.CENTER,
             }));
             tile.set_child(box);

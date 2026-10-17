@@ -1,5 +1,5 @@
 // Run with: gjs -m gnome-extension/tests/zones.test.js
-import {SCREEN_LAYOUTS, SPAN_LAYOUTS, zoneRect, spanRect, hitTest, stackedPair, popupPosition, edgeConstraints, linkedResize, freeRect, restoredUnderPointer, monitorAt, keyboardScreenFor, externalScreens, micVolumeIcon, namedScreens, defaultSwapPair, screenMap, togglePick, isExternal, keyboardScreenForTouch, swipeScreen, logicalSize, offeredScales, panelScale, placeBeside, placementBeside, layoutScreens, currentPlacements, placedAgainst, mirrorSources, mirrorMode, FingerHold} from '../zenbook-duo-snap@zenbook-duo-linux/zones.js';
+import {SCREEN_LAYOUTS, SPAN_LAYOUTS, zoneRect, spanRect, hitTest, stackedPair, popupPosition, edgeConstraints, linkedResize, freeRect, restoredUnderPointer, monitorAt, keyboardScreenFor, externalScreens, micVolumeIcon, namedScreens, defaultSwapPair, screenMap, togglePick, isExternal, keyboardScreenForTouch, swipeScreen, logicalSize, offeredScales, panelScale, placeBeside, placementBeside, layoutScreens, currentPlacements, placedAgainst, mirrorSources, mirrorMode, FingerHold} from '../zenbook-duo-gnome-tools@zenbook-duo-linux/zones.js';
 
 let failures = 0;
 // Compare by value, independent of object key order (Maps by their entries).

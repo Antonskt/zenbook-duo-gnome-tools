@@ -1,11 +1,11 @@
 {
-  "uuid": "zenbook-duo-snap@zenbook-duo-linux",
-  "name": "Zenbook Duo Snap",
+  "uuid": "zenbook-duo-gnome-tools@zenbook-duo-linux",
+  "name": "Zenbook Duo GNOME Tools",
   "description": "Window snapping and display controls for the ASUS Zenbook Duo: snap windows to either screen or across both while dragging, swap windows between screens (F8), compact display controls (F7), touch-keyboard placement, and pop-ups for the Zenbook Duo Linux services.\n\nWorks best with https://github.com/zakstam/zenbook-duo-linux, but the window snapping and display controls work without it.",
   "shell-version": [
     "50"
   ],
-  "settings-schema": "org.gnome.shell.extensions.zenbook-duo-snap",
-  "url": "https://github.com/Antonskt/zenbook-duo-snap",
+  "settings-schema": "org.gnome.shell.extensions.zenbook-duo-gnome-tools",
+  "url": "https://github.com/Antonskt/zenbook-duo-gnome-tools",
   "version-name": "1.0"
 }

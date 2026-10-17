@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema id="org.gnome.shell.extensions.zenbook-duo-snap"
-          path="/org/gnome/shell/extensions/zenbook-duo-snap/">
+  <schema id="org.gnome.shell.extensions.zenbook-duo-gnome-tools"
+          path="/org/gnome/shell/extensions/zenbook-duo-gnome-tools/">
     <key name="swap-windows" type="as">
       <default><![CDATA[['XF86Launch2']]]></default>
       <summary>Swap all windows between the top and bottom screen</summary>

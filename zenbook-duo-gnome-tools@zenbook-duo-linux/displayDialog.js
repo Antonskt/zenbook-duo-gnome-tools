@@ -90,7 +90,7 @@ function describe(screens) {
 
 function chip(label, checked, onClick, sensitive = true) {
     const button = new St.Button({
-        style_class: 'duo-snap-chip',
+        style_class: 'duo-tools-chip',
         label,
         can_focus: sensitive,
         reactive: sensitive,
@@ -109,7 +109,7 @@ const CHIPS_PER_LINE = 4;
 /** A chip that only shows a state (checked, not clickable). */
 function indicator(label) {
     const button = new St.Button({
-        style_class: 'duo-snap-chip',
+        style_class: 'duo-tools-chip',
         label,
         can_focus: false,
         reactive: false,
@@ -121,12 +121,12 @@ function indicator(label) {
 /** A titled group of chips, at most `perLine` per line. */
 function row(title, children, perLine = CHIPS_PER_LINE) {
     const box = new St.BoxLayout({
-        style_class: 'duo-snap-display-row',
+        style_class: 'duo-tools-display-row',
         orientation: Clutter.Orientation.VERTICAL,
     });
-    box.add_child(new St.Label({text: title, style_class: 'duo-snap-display-row-title'}));
+    box.add_child(new St.Label({text: title, style_class: 'duo-tools-display-row-title'}));
     for (let i = 0; i < children.length; i += perLine) {
-        const line = new St.BoxLayout({style_class: 'duo-snap-chips'});
+        const line = new St.BoxLayout({style_class: 'duo-tools-chips'});
         children.slice(i, i + perLine).forEach(c => line.add_child(c));
         box.add_child(line);
     }
@@ -244,7 +244,7 @@ export async function changeDisplays(change) {
 
 /** A line of explanation in place of controls. */
 function note(text) {
-    const label = new St.Label({text, style_class: 'duo-snap-display-note'});
+    const label = new St.Label({text, style_class: 'duo-tools-display-note'});
     label.clutter_text.line_wrap = true;
     return label;
 }
@@ -252,17 +252,17 @@ function note(text) {
 /** A titled cross of four chips: above, left and right, below. */
 function crossRow(title, chips) {
     const box = new St.BoxLayout({
-        style_class: 'duo-snap-display-row',
+        style_class: 'duo-tools-display-row',
         orientation: Clutter.Orientation.VERTICAL,
     });
-    box.add_child(new St.Label({text: title, style_class: 'duo-snap-display-row-title'}));
+    box.add_child(new St.Label({text: title, style_class: 'duo-tools-display-row-title'}));
     const cross = new St.BoxLayout({
-        style_class: 'duo-snap-cross',
+        style_class: 'duo-tools-cross',
         orientation: Clutter.Orientation.VERTICAL,
         x_align: Clutter.ActorAlign.START,
     });
     for (const line of [[chips.above], [chips.left, chips.right], [chips.below]]) {
-        const lineBox = new St.BoxLayout({style_class: 'duo-snap-chips', x_align: Clutter.ActorAlign.CENTER});
+        const lineBox = new St.BoxLayout({style_class: 'duo-tools-chips', x_align: Clutter.ActorAlign.CENTER});
         line.forEach(c => lineBox.add_child(c));
         cross.add_child(lineBox);
     }
@@ -281,7 +281,7 @@ export const DisplayDialog = GObject.registerClass(
 class DisplayDialog extends ModalDialog.ModalDialog {
     /** @param {() => boolean} keyboardAttached whether the keyboard covers the bottom panel now */
     _init(keyboardAttached = () => false) {
-        super._init({styleClass: 'duo-snap-display-dialog'});
+        super._init({styleClass: 'duo-tools-display-dialog'});
         this._keyboardAttached = keyboardAttached;
         // The title with a close button in the top-right corner.
         const header = new St.Widget({layout_manager: new Clutter.BinLayout(), x_expand: true});
@@ -291,7 +291,7 @@ class DisplayDialog extends ModalDialog.ModalDialog {
             x_expand: true,
         }));
         const closeButton = new St.Button({
-            style_class: 'duo-snap-close-button',
+            style_class: 'duo-tools-close-button',
             child: new St.Icon({icon_name: 'window-close-symbolic', icon_size: 16}),
             can_focus: true,
             x_expand: true,
@@ -302,7 +302,7 @@ class DisplayDialog extends ModalDialog.ModalDialog {
         header.add_child(closeButton);
         this.contentLayout.add_child(header);
         this._body = new St.BoxLayout({
-            style_class: 'duo-snap-display-body',
+            style_class: 'duo-tools-display-body',
             orientation: Clutter.Orientation.VERTICAL,
         });
         this.contentLayout.add_child(this._body);
@@ -399,7 +399,7 @@ class DisplayDialog extends ModalDialog.ModalDialog {
             if (await applyChange(this._serial, this._screens, change))
                 await afterwards?.();
         } catch (error) {
-            log(`Zenbook Duo Snap: display change failed: ${error.message}`);
+            log(`Zenbook Duo GNOME Tools: display change failed: ${error.message}`);
         } finally {
             this._busy = false;
             await this._refresh();
@@ -408,9 +408,9 @@ class DisplayDialog extends ModalDialog.ModalDialog {
 
     _build() {
         this._body.destroy_all_children();
-        const tabs = new St.BoxLayout({style_class: 'duo-snap-tabs', x_align: Clutter.ActorAlign.CENTER});
+        const tabs = new St.BoxLayout({style_class: 'duo-tools-tabs', x_align: Clutter.ActorAlign.CENTER});
         for (const {id, label} of TABS) {
-            const tab = new St.Button({style_class: 'duo-snap-tab', label, can_focus: true});
+            const tab = new St.Button({style_class: 'duo-tools-tab', label, can_focus: true});
             if (id === lastTab)
                 tab.add_style_pseudo_class('checked');
             tab.connect('clicked', () => {
@@ -575,11 +575,11 @@ class DisplayDialog extends ModalDialog.ModalDialog {
         if (percent === null)
             return;
         const box = new St.BoxLayout({
-            style_class: 'duo-snap-display-row',
+            style_class: 'duo-tools-display-row',
             orientation: Clutter.Orientation.VERTICAL,
         });
-        box.add_child(new St.Label({text: 'Brightness', style_class: 'duo-snap-display-row-title'}));
-        const line = new St.BoxLayout({style_class: 'duo-snap-brightness'});
+        box.add_child(new St.Label({text: 'Brightness', style_class: 'duo-tools-display-row-title'}));
+        const line = new St.BoxLayout({style_class: 'duo-tools-brightness'});
         line.add_child(new St.Icon({icon_name: 'display-brightness-symbolic', icon_size: 16}));
         const slider = new Slider.Slider(percent / 100);
         slider.x_expand = true;
@@ -598,7 +598,7 @@ class DisplayDialog extends ModalDialog.ModalDialog {
             try {
                 await setPanelBrightness(both ? 'both' : selected.panel, Math.max(1, value * 100));
             } catch (error) {
-                log(`Zenbook Duo Snap: brightness failed: ${error.message}`);
+                log(`Zenbook Duo GNOME Tools: brightness failed: ${error.message}`);
             } finally {
                 inFlight = false;
                 const next = queued;
@@ -617,7 +617,7 @@ class DisplayDialog extends ModalDialog.ModalDialog {
                     await setPanelBrightness('both', Math.max(1, slider.value * 100));
                 this._build();
             });
-            const toggles = new St.BoxLayout({style_class: 'duo-snap-chips'});
+            const toggles = new St.BoxLayout({style_class: 'duo-tools-chips'});
             toggles.add_child(toggle);
             box.add_child(toggles);
         }
@@ -752,12 +752,12 @@ class DisplayDialog extends ModalDialog.ModalDialog {
     /** The screens that are on, arranged like the real ones; off ones below. */
     _buildMap() {
         const box = new St.BoxLayout({
-            style_class: 'duo-snap-display-map-box',
+            style_class: 'duo-tools-display-map-box',
             orientation: Clutter.Orientation.VERTICAL,
         });
         const on = this._screens.filter(s => s.on && !s.mirrorOf);
         const map = new St.Widget({
-            style_class: 'duo-snap-pick-map',
+            style_class: 'duo-tools-pick-map',
             width: MAP_WIDTH,
             height: MAP_HEIGHT,
             x_align: Clutter.ActorAlign.CENTER,
@@ -765,7 +765,7 @@ class DisplayDialog extends ModalDialog.ModalDialog {
         const rects = screenMap(on.map(s => ({x: s.x, y: s.y, ...logicalSize(s)})), MAP_WIDTH, MAP_HEIGHT);
         on.forEach((screen, i) => {
             const tile = new St.Button({
-                style_class: 'duo-snap-pick-screen',
+                style_class: 'duo-tools-pick-screen',
                 can_focus: true,
                 x: rects[i].x,
                 y: rects[i].y,
@@ -774,7 +774,7 @@ class DisplayDialog extends ModalDialog.ModalDialog {
                 child: new St.Label({
                     text: [screen.label, ...this._screens.filter(m => m.mirrorOf === screen.connector)
                         .map(m => `= ${m.label}`)].join('\n'),
-                    style_class: 'duo-snap-pick-name',
+                    style_class: 'duo-tools-pick-name',
                     x_align: Clutter.ActorAlign.CENTER,
                     y_align: Clutter.ActorAlign.CENTER,
                 }),
