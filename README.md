@@ -11,6 +11,23 @@ A GNOME Shell extension for the ASUS Zenbook Duo (GNOME 50).
 
 The window snapping and display controls work on their own. The keys and pop-ups need the Zenbook Duo Linux services.
 
+## Screenshots
+
+Snap popup while dragging a window:
+
+![Snap popup with layouts for the top screen, bottom screen, both screens and an external screen](screenshots/snap.png)
+
+F7 display controls and the F8 swap dialog:
+
+<p>
+  <img src="screenshots/display-controls.png" alt="Display controls with brightness and scale for the panels" width="360">
+  <img src="screenshots/swap-windows.png" alt="Swap Windows dialog: pick two screens whose windows trade places" width="420">
+</p>
+
+Main display switch:
+
+![Main display switch bubble with a button on each screen](screenshots/main-display-switch.png)
+
 ## Install
 
 Download `zenbook-duo-gnome-tools@zenbook-duo-linux.shell-extension.zip` from the [latest release](https://github.com/Antonskt/zenbook-duo-gnome-tools/releases/latest), then:
